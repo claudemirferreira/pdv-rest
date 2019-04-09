@@ -9,10 +9,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import br.com.pdv.api.model.domain.Categoria;
 import br.com.pdv.api.model.domain.Cidade;
+import br.com.pdv.api.model.domain.Cliente;
+import br.com.pdv.api.model.domain.Endereco;
 import br.com.pdv.api.model.domain.Estado;
 import br.com.pdv.api.model.domain.Produto;
+import br.com.pdv.api.model.domain.enumerado.TipoCliente;
 import br.com.pdv.api.model.repository.CategoriaRepository;
 import br.com.pdv.api.model.repository.CidadeRepository;
+import br.com.pdv.api.model.repository.ClienteRepository;
+import br.com.pdv.api.model.repository.EnderecoRepository;
 import br.com.pdv.api.model.repository.EstadoRepository;
 import br.com.pdv.api.model.repository.ProdutoRepository;
 
@@ -30,6 +35,12 @@ public class PdvApiApplication implements CommandLineRunner {
 
 	@Autowired
 	private ProdutoRepository produtoRepository;
+
+	@Autowired
+	private EnderecoRepository enderecoRepository;
+
+	@Autowired
+	private ClienteRepository clienteRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(PdvApiApplication.class, args);
@@ -65,10 +76,20 @@ public class PdvApiApplication implements CommandLineRunner {
 
 		e1.getCidades().addAll(Arrays.asList(cidade1));
 		e2.getCidades().addAll(Arrays.asList(cidade2, cidade3));
-		
+
 		estadoRepository.saveAll(Arrays.asList(e1, e2));
-		
 		cidadeRepository.saveAll(Arrays.asList(cidade1, cidade2, cidade3));
+
+		Cliente cli1 = new Cliente(null, "Maria Silva", "maria@gmail.com", "60735090220", TipoCliente.PESSOAFISICA);
+		cli1.getTelefones().addAll(Arrays.asList("555555", "22222"));
+
+		Endereco end1 = new Endereco(null, "Rua Flores", "300", "Apto 303", "Jardim", "38220834", cli1, cidade1);
+		Endereco end2 = new Endereco(null, "Aven Matos", "105", "Apto 303", "Centro", "38220834", cli1, cidade2);
+
+		cli1.getEnderecos().addAll(Arrays.asList(end1, end2));
+
+		clienteRepository.saveAll(Arrays.asList(cli1));
+		enderecoRepository.saveAll(Arrays.asList(end1, end2));
 
 	}
 
