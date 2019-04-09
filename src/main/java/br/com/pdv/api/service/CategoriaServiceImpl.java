@@ -27,6 +27,16 @@ public class CategoriaServiceImpl {
 		repo.save(entity);
 		return entity;
 	}
+	
+	public Categoria update(Categoria obj) {
+		Categoria newObj = findById(obj.getId());
+		updateData(newObj, obj);
+		return repo.save(newObj);
+	}
+	
+	private void updateData(Categoria newObj, Categoria obj) {
+		newObj.setNome(obj.getNome());
+	}
 
 	public void delete(Categoria entity) {
 		repo.delete(entity);
