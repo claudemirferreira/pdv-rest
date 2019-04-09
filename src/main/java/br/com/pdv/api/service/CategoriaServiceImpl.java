@@ -22,6 +22,11 @@ public class CategoriaServiceImpl {
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
 	}
+	
+	public Categoria save(Categoria entity) {
+		repo.save(entity);
+		return entity;
+	}
 
 	public void delete(Categoria entity) {
 		repo.delete(entity);
