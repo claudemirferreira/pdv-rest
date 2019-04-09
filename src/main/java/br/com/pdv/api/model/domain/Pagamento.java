@@ -15,7 +15,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.pdv.api.model.domain.enumerado.EstadoPagamento;
 
@@ -34,7 +34,7 @@ public abstract class Pagamento implements Serializable {
 
 	private Integer estado;
 
-	@JsonBackReference
+	@JsonIgnore
 	@OneToOne
 	@JoinColumn(name = "PEDI_ID")
 	@MapsId
