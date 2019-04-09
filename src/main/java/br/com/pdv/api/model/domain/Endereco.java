@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "pdv_endereco")
 public class Endereco implements Serializable {
@@ -34,12 +36,13 @@ public class Endereco implements Serializable {
 
 	private String cep;
 
+	@JsonBackReference
 	@ManyToOne
-	@JoinColumn(name="CLIE_ID")
+	@JoinColumn(name = "CLIE_ID")
 	private Cliente cliente;
 
 	@ManyToOne
-	@JoinColumn(name="CIDA_ID")
+	@JoinColumn(name = "CIDA_ID")
 	private Cidade cidade;
 
 	public Endereco() {
