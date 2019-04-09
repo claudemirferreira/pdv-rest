@@ -13,6 +13,7 @@ import br.com.pdv.api.model.domain.Cidade;
 import br.com.pdv.api.model.domain.Cliente;
 import br.com.pdv.api.model.domain.Endereco;
 import br.com.pdv.api.model.domain.Estado;
+import br.com.pdv.api.model.domain.ItemPedido;
 import br.com.pdv.api.model.domain.Pagamento;
 import br.com.pdv.api.model.domain.PagamentoComBoleto;
 import br.com.pdv.api.model.domain.PagamentoComCartao;
@@ -25,6 +26,7 @@ import br.com.pdv.api.model.repository.CidadeRepository;
 import br.com.pdv.api.model.repository.ClienteRepository;
 import br.com.pdv.api.model.repository.EnderecoRepository;
 import br.com.pdv.api.model.repository.EstadoRepository;
+import br.com.pdv.api.model.repository.ItemPedidoRepository;
 import br.com.pdv.api.model.repository.PagamentoRepository;
 import br.com.pdv.api.model.repository.PedidoRepository;
 import br.com.pdv.api.model.repository.ProdutoRepository;
@@ -55,6 +57,9 @@ public class PdvApiApplication implements CommandLineRunner {
 
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
+	
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(PdvApiApplication.class, args);
@@ -123,6 +128,22 @@ public class PdvApiApplication implements CommandLineRunner {
 		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
 
 		pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
+		
+		
+		ItemPedido ip1 = new ItemPedido(ped1, p1, 0.00, 1, 2000.00);
+		ItemPedido ip2 = new ItemPedido(ped1, p3, 0.00, 2, 80.00);
+		ItemPedido ip3 = new ItemPedido(ped2, p2, 100.00, 1, 800.00);
+		
+		ped1.getItens().addAll(Arrays.asList(ip1,ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+		
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+		
+		itemPedidoRepository.saveAll(Arrays.asList(ip1,ip2,ip3));
+		
+		//Pedido ped1 = new Pedido(id, instante, cliente, enderecoDeEntrega);
 
 	}
 
