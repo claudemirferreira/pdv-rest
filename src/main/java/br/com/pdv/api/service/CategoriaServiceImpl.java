@@ -2,11 +2,14 @@ package br.com.pdv.api.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import br.com.pdv.api.dto.CategoriaDTO;
 import br.com.pdv.api.exception.DataIntegrityException;
 import br.com.pdv.api.exception.ObjectNotFoundException;
 import br.com.pdv.api.model.domain.Categoria;
@@ -49,8 +52,8 @@ public class CategoriaServiceImpl {
 		}
 	}
 
-	public List<Categoria> findAll() {
-		return repo.findAll();
+	public List<CategoriaDTO> findAll() {
+		return repo.findAll().stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
 	}
 
 }

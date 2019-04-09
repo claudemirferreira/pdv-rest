@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import br.com.pdv.api.dto.CategoriaDTO;
 import br.com.pdv.api.model.domain.Categoria;
 import br.com.pdv.api.service.CategoriaServiceImpl;
 
@@ -30,33 +31,31 @@ public class CategoriaResource {
 		return ResponseEntity.ok().body(obj);
 	}
 
-	@RequestMapping(method=RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> post(@Valid @RequestBody Categoria objDto) {
 		Categoria obj = service.save(objDto);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-			.path("/{id}").buildAndExpand(obj.getId()).toUri();
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 
-	@RequestMapping(value = "/{id}", method=RequestMethod.PUT)
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> put(@Valid @RequestBody Categoria objDto, @PathVariable Integer id) {
 		objDto.setId(id);
 		Categoria obj = service.update(objDto);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-			.path("/{id}").buildAndExpand(obj.getId()).toUri();
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 
-	@RequestMapping(value = "/{id}", method=RequestMethod.DELETE)
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 		service.deleteById(id);
 		return ResponseEntity.noContent().build();
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	public List<Categoria> listar() {
-		List<Categoria> list = service.findAll();
-		return list;
+	public ResponseEntity<List<CategoriaDTO>> listar() {
+		List<CategoriaDTO> list = service.findAll();
+		return ResponseEntity.ok().body(list);
 	}
 
 }
