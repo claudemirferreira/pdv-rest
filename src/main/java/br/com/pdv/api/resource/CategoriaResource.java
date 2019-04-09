@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.pdv.api.model.domain.Categoria;
-import br.com.pdv.api.model.repository.CategoriaServiceImpl;
+import br.com.pdv.api.service.CategoriaServiceImpl;
 
 @RestController
 @RequestMapping(value = "/categorias")
@@ -21,6 +21,9 @@ public class CategoriaResource {
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<?> find(@PathVariable Integer id) {
+		
+		
+		
 		Categoria obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}

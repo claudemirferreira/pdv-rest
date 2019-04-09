@@ -1,45 +1,46 @@
 package br.com.pdv.api.model.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-@Table(name = "pdv_categoria")
-public class Categoria implements Serializable {
+@Table(name = "pdv_cidade")
+public class Cidade implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CATEGORIA_SEQ")
-	@SequenceGenerator(sequenceName = "CATEGORIA_SEQ", allocationSize = 1, name = "CATEGORIA_SEQ")
-	@Column(name = "CATE_ID")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ESTADO_SEQ")
+	@SequenceGenerator(sequenceName = "ESTADO_SEQ", allocationSize = 1, name = "ESTADO_SEQ")
+	@Column(name = "CIDA_ID")
 	private Integer id;
 
 	private String nome;
-	
-	@JsonManagedReference
-	@ManyToMany(mappedBy = "categorias")
-	private List<Produto> produtos = new ArrayList<Produto>();
 
-	public Categoria() {
+	@JsonManagedReference
+	@ManyToOne
+	@JoinColumn(name = "ESTA_ID")
+	private Estado estado;
+
+	public Cidade() {
 	}
 
-	public Categoria(Integer id, String nome) {
+	public Cidade(Integer id, String nome, Estado estado) {
 		super();
 		this.id = id;
 		this.nome = nome;
+		this.estado = estado;
 	}
 
 	public Integer getId() {
@@ -58,12 +59,12 @@ public class Categoria implements Serializable {
 		this.nome = nome;
 	}
 
-	public List<Produto> getProdutos() {
-		return produtos;
+	public Estado getEstado() {
+		return estado;
 	}
 
-	public void setProdutos(List<Produto> produtos) {
-		this.produtos = produtos;
+	public void setEstado(Estado estado) {
+		this.estado = estado;
 	}
 
 	@Override
@@ -82,7 +83,7 @@ public class Categoria implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Categoria other = (Categoria) obj;
+		Cidade other = (Cidade) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
