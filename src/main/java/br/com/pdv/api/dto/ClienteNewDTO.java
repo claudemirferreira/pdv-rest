@@ -9,7 +9,9 @@ import br.com.pdv.api.model.domain.Cidade;
 import br.com.pdv.api.model.domain.Cliente;
 import br.com.pdv.api.model.domain.Endereco;
 import br.com.pdv.api.model.domain.enumerado.TipoCliente;
+import br.com.pdv.api.service.validation.ClienteSave;
 
+@ClienteSave
 public class ClienteNewDTO {
 
 	private Integer id;
