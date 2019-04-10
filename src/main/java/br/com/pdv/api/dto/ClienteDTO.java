@@ -6,7 +6,9 @@ import javax.validation.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Length;
 
 import br.com.pdv.api.model.domain.Cliente;
+import br.com.pdv.api.service.validation.ClienteUpdate;
 
+@ClienteUpdate
 public class ClienteDTO {
 
 	private Integer id;
@@ -14,11 +16,11 @@ public class ClienteDTO {
 	@NotEmpty(message = "Preenchimento obrigatorio")
 	@Length(min = 5, max = 100, message = "tamanho deve ser entrew 5 e 100 caracteres")
 	private String nome;
-	
+
 	@NotEmpty(message = "Preenchimento obrigatorio")
 	@Email(message = "email invalido")
 	private String email;
-	
+
 	public ClienteDTO() {
 	}
 
@@ -62,7 +64,7 @@ public class ClienteDTO {
 	public static Cliente fromDTO(ClienteDTO dto) {
 		return new Cliente(dto.getId(), dto.getNome(), dto.getEmail(), null, null);
 	}
-	
+
 	public static Cliente fromDTO(ClienteNewDTO dto) {
 		return new Cliente(dto.getId(), dto.getNome(), dto.getEmail(), null, null);
 	}
