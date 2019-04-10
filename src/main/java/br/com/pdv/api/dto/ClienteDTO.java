@@ -62,5 +62,9 @@ public class ClienteDTO {
 	public static Cliente fromDTO(ClienteDTO dto) {
 		return new Cliente(dto.getId(), dto.getNome(), dto.getEmail(), null, null);
 	}
+	
+	public static Cliente fromDTO(ClienteNewDTO dto) {
+		return new Cliente(dto.getId(), dto.getNome(), dto.getEmail(), null, null);
+	}
 
 }

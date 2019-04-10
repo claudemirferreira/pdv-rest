@@ -10,12 +10,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.pdv.api.dto.ClienteDTO;
 import br.com.pdv.api.exception.DataIntegrityException;
 import br.com.pdv.api.exception.ObjectNotFoundException;
 import br.com.pdv.api.model.domain.Cliente;
 import br.com.pdv.api.model.repository.ClienteRepository;
+import br.com.pdv.api.model.repository.EnderecoRepository;
 
 @Service
 public class ClienteServiceImpl {
@@ -23,14 +25,20 @@ public class ClienteServiceImpl {
 	@Autowired
 	private ClienteRepository repo;
 
+	@Autowired
+	private EnderecoRepository enderecoRepository;
+
 	public Cliente findById(Integer id) {
 		Optional<Cliente> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));
 	}
 
+	@Transactional
 	public Cliente save(Cliente entity) {
-		repo.save(entity);
+		entity.setId(null);
+		entity = repo.save(entity);
+		enderecoRepository.saveAll(entity.getEnderecos());
 		return entity;
 	}
 
