@@ -57,7 +57,7 @@ public class PdvApiApplication implements CommandLineRunner {
 
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
-	
+
 	@Autowired
 	private ItemPedidoRepository itemPedidoRepository;
 
@@ -70,6 +70,13 @@ public class PdvApiApplication implements CommandLineRunner {
 		// TODO Auto-generated method stub
 		Categoria c1 = new Categoria(null, "Informática");
 		Categoria c2 = new Categoria(null, "Escritorio");
+		Categoria c3 = new Categoria(null, "Cama");
+		Categoria c4 = new Categoria(null, "Mesa");
+
+		Categoria c5 = new Categoria(null, "cat5");
+		Categoria c6 = new Categoria(null, "cat6");
+		Categoria c7 = new Categoria(null, "cat7");
+		Categoria c8 = new Categoria(null, "cat8");
 
 		Produto p1 = new Produto(null, "Compudator", 2000.00);
 		Produto p2 = new Produto(null, "Impressora", 800.00);
@@ -82,7 +89,7 @@ public class PdvApiApplication implements CommandLineRunner {
 		p2.getCategorias().addAll(Arrays.asList(c1, c2));
 		p3.getCategorias().addAll(Arrays.asList(c1));
 
-		repo.saveAll(Arrays.asList(c1, c2));
+		repo.saveAll(Arrays.asList(c1, c2, c3, c4, c5, c6, c7, c8));
 
 		produtoRepository.saveAll(Arrays.asList(p1, p2, p3));
 
@@ -128,22 +135,21 @@ public class PdvApiApplication implements CommandLineRunner {
 		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
 
 		pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
-		
-		
+
 		ItemPedido ip1 = new ItemPedido(ped1, p1, 0.00, 1, 2000.00);
 		ItemPedido ip2 = new ItemPedido(ped1, p3, 0.00, 2, 80.00);
 		ItemPedido ip3 = new ItemPedido(ped2, p2, 100.00, 1, 800.00);
-		
-		ped1.getItens().addAll(Arrays.asList(ip1,ip2));
+
+		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
 		ped2.getItens().addAll(Arrays.asList(ip3));
-		
+
 		p1.getItens().addAll(Arrays.asList(ip1));
 		p2.getItens().addAll(Arrays.asList(ip3));
 		p3.getItens().addAll(Arrays.asList(ip2));
-		
-		itemPedidoRepository.saveAll(Arrays.asList(ip1,ip2,ip3));
-		
-		//Pedido ped1 = new Pedido(id, instante, cliente, enderecoDeEntrega);
+
+		itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
+
+		// Pedido ped1 = new Pedido(id, instante, cliente, enderecoDeEntrega);
 
 	}
 
