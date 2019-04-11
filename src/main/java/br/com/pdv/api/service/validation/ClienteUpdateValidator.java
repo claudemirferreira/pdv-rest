@@ -9,7 +9,6 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.devtools.remote.server.HandlerMapper;
 import org.springframework.web.servlet.HandlerMapping;
 
 import br.com.pdv.api.dto.ClienteDTO;
@@ -21,7 +20,7 @@ public class ClienteUpdateValidator implements ConstraintValidator<ClienteUpdate
 
 	@Autowired
 	private ClienteRepository repo;
-	
+
 	@Autowired
 	private HttpServletRequest request;
 
@@ -33,9 +32,10 @@ public class ClienteUpdateValidator implements ConstraintValidator<ClienteUpdate
 	@Override
 	public boolean isValid(ClienteDTO objDto, ConstraintValidatorContext context) {
 		@SuppressWarnings("unchecked")
-		Map<String, String> map = (Map<String, String>) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
+		Map<String, String> map = (Map<String, String>) request
+				.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
 		Integer id = Integer.parseInt(map.get("id"));
-		
+
 		List<FieldMessage> list = new ArrayList<FieldMessage>();
 
 		Cliente aux = repo.findByEmail(objDto.getEmail());

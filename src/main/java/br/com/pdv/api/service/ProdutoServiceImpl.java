@@ -14,7 +14,9 @@ import org.springframework.stereotype.Service;
 import br.com.pdv.api.dto.ProdutoDTO;
 import br.com.pdv.api.exception.DataIntegrityException;
 import br.com.pdv.api.exception.ObjectNotFoundException;
+import br.com.pdv.api.model.domain.Categoria;
 import br.com.pdv.api.model.domain.Produto;
+import br.com.pdv.api.model.repository.CategoriaRepository;
 import br.com.pdv.api.model.repository.ProdutoRepository;
 
 @Service
@@ -22,6 +24,9 @@ public class ProdutoServiceImpl {
 
 	@Autowired
 	private ProdutoRepository repo;
+	
+	@Autowired
+	private CategoriaRepository categoriaRepository;
 
 	public Produto findById(Integer id) {
 		Optional<Produto> obj = repo.findById(id);
@@ -61,6 +66,12 @@ public class ProdutoServiceImpl {
 	public Page<Produto> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return repo.findAll(pageRequest);
+	}
+	
+	public Page<Produto> search(String nome, List<Integer> ids, Integer page, Integer linesPerPage, String orderBy, String direction) {
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		List<Categoria> categorias = categoriaRepository.findAllById(ids);
+		return repo.findDistinctByNomeContainingAndCategoriasIn(nome, categorias, pageRequest);	
 	}
 
 }
